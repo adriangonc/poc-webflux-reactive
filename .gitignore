@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Informacoes sensiveis ###
+src/main/resources/application.properties
