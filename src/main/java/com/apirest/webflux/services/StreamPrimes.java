@@ -51,9 +51,9 @@ public class StreamPrimes {
 	}
 	
 	public static Flux<Integer> primesMultiThread(Integer firstNumber, Integer lastNumber){
-		int parallelism = 1; 
+		int parallelism = 7; 
 		int cores = Runtime.getRuntime().availableProcessors(); //Número de Threads de CPU 
-		parallelism = (cores -1);
+		//parallelism = (cores -1);
 		
 		ForkJoinPool forkJoinPool = null;
 		try {
@@ -74,6 +74,46 @@ public class StreamPrimes {
 		    }
 		}
 		
+	}
+	
+	public static List<Integer> primesMultiThreadImperative(Integer firstNumber, Integer lastNumber){
+		int parallelism = 7; 
+		int cores = Runtime.getRuntime().availableProcessors(); //Número de Threads de CPU 
+		//parallelism = (cores -1);
+		
+		ForkJoinPool forkJoinPool = null;
+		try {
+		    forkJoinPool = new ForkJoinPool(parallelism);
+		    final List<Integer> primes = forkJoinPool.submit(() ->
+		        // Tarefa paralela
+		        IntStream.range(firstNumber, lastNumber).parallel()
+		                .filter(StreamPrimes::isPrime)
+		                .boxed().collect(Collectors.toList())
+		    ).get();
+		    //System.out.println(primes);
+		    return primes;
+		} catch (InterruptedException | ExecutionException e) {
+		    throw new RuntimeException(e);
+		} finally {
+		    if (forkJoinPool != null) {
+		        forkJoinPool.shutdown(); //Desliga pool de Threads
+		    }
+		}
+		
+	}
+	
+	public static List<Integer> primesSingleThreadImperative(Integer firstNumber, Integer lastNumber){
+		
+		List<Integer> listPrimes = new ArrayList<Integer>();
+		List<Integer> numbers = countToMax(firstNumber, lastNumber);
+		
+		for (Integer i : numbers) {
+			if(isPrime(i)) {
+				listPrimes.add(i);
+			}
+		}
+		
+		return listPrimes;
 	}
 	
 }

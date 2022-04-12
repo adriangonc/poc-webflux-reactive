@@ -18,9 +18,11 @@ public class PrimeNumberServiceImp implements PrimeNumberService {
 	 * request
 	 */
 	@Override
-	public ArrayList<Integer> findPrimeNumbers(Integer firstNumber, Integer lastNumber) {
+	public List<Integer> findPrimeNumbers(Integer firstNumber, Integer lastNumber) {
 
-		int low = 0, high = 0;
+		return StreamPrimes.primesSingleThreadImperative(firstNumber, lastNumber);
+		
+		/*int low = 0, high = 0;
 
 		ArrayList<Integer> listPrimes = new ArrayList<Integer>();
 
@@ -55,7 +57,7 @@ public class PrimeNumberServiceImp implements PrimeNumberService {
 		// java.util.Date dateEnd = new java.util.Date();
 		// System.out.println("\n" + dateEnd);
 
-		return listPrimes;
+		return listPrimes;*/
 	}
 
 	@Override
@@ -137,6 +139,11 @@ public class PrimeNumberServiceImp implements PrimeNumberService {
 	public Flux<Integer> streamPrimeNumbers(Integer firstNumber, Integer lastNumber) {
 		//return StreamPrimes.streamPrimes(firstNumber, lastNumber);
 		return StreamPrimes.primesMultiThread(firstNumber, lastNumber);
+	}
+
+	@Override
+	public List<Integer> findPrimeNumbersImperativeMultithread(Integer firstNumber, Integer lastNumber) {
+		return StreamPrimes.primesMultiThreadImperative(firstNumber, lastNumber);
 	}
 	
 

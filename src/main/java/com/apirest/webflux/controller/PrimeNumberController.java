@@ -1,7 +1,7 @@
 package com.apirest.webflux.controller;
 
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,10 +20,18 @@ public class PrimeNumberController {
 	PrimeNumberService primeNumberService;
 
 	@GetMapping(value = "/calculate-primes")
-	public ArrayList<Integer> getPrimeNumbers(@RequestParam(name = "firstNumber") Integer firstNumber,
+	public List<Integer> getPrimeNumbers(@RequestParam(name = "firstNumber") Integer firstNumber,
 			@RequestParam(name = "lastNumber") Integer lastNumber) {
 		System.out.println("Streaming event thread: " + Thread.currentThread().getName());
 		return primeNumberService.findPrimeNumbers(firstNumber, lastNumber);
+
+	}
+	
+	@GetMapping(value = "/calculate-primes-imperative-multithread")
+	public List<Integer> getPrimeNumbersImperativeMultithread(@RequestParam(name = "firstNumber") Integer firstNumber,
+			@RequestParam(name = "lastNumber") Integer lastNumber) {
+		System.out.println("Streaming event thread: " + Thread.currentThread().getName());
+		return primeNumberService.findPrimeNumbersImperativeMultithread(firstNumber, lastNumber);
 
 	}
 
