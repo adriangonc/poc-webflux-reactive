@@ -51,9 +51,9 @@ public class StreamPrimes {
 	}
 	
 	public static Flux<Integer> primesMultiThread(Integer firstNumber, Integer lastNumber){
-		int parallelism = 7; 
+		int parallelism = 2;
 		int cores = Runtime.getRuntime().availableProcessors(); //Número de Threads de CPU 
-		//parallelism = (cores -1);
+		parallelism = (cores -1);
 		
 		ForkJoinPool forkJoinPool = null;
 		try {
@@ -77,9 +77,9 @@ public class StreamPrimes {
 	}
 	
 	public static List<Integer> primesMultiThreadImperative(Integer firstNumber, Integer lastNumber){
-		int parallelism = 7; 
+		int parallelism = 2;
 		int cores = Runtime.getRuntime().availableProcessors(); //Número de Threads de CPU 
-		//parallelism = (cores -1);
+		parallelism = (cores -1);
 		
 		ForkJoinPool forkJoinPool = null;
 		try {
